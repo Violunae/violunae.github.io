@@ -40,7 +40,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
     margin: 20px 0;
-    font-size: 1.2em;
+    font-size: 1.2rem;
     color: var(--main-color);
 }
 
@@ -113,12 +113,6 @@ footer {
     margin: 20px 0;
 }
 
-@media screen and (max-width: 960px) {
-    .box {
-        width: 100%;
-    }
-}
-
 .glass {
     background: rgba(20, 20, 20, 0.5);
     backdrop-filter: blur(5px);
@@ -133,7 +127,7 @@ footer {
     filter: saturate(0) brightness(5.0);
     transition: filter 0.3s;
     cursor: pointer;
-    margin: 0 10px;
+    margin: 0 5px;
 }
 
 .social:hover {
@@ -153,4 +147,19 @@ footer {
 
 .splash {
     color: var(--strong-color);
+}
+
+@media screen and (max-width: 960px) {
+    html {
+        font-size: 0.75em;
+    }
+
+    .tab {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+    .box {
+        width: 100%;
+    }
 }
