@@ -159,6 +159,16 @@ footer {
         font-size: 0.75em;
     }
 
+    .pfp img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .social {
+        width: 30px;
+        height: 30px;
+    }
+
     .tab {
     margin-left: 20px;
     margin-right: 20px;
