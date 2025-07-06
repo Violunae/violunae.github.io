@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sky above us</title>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        #startText {
+            height: 100%;
+            display: flex;
+            font-family: "Lucida Console", "Courier New", Monaco, monospace;
+            font-size: 2em;
+            cursor: pointer;
+            user-select: none;
+            color: #ff00ff;
+        }
+
+        #obscurer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: -1;
+        }
+    </style>
+
+    <link rel="stylesheet" href="/style.css">
+    <script src="/scripts/shader-background.js" defer></script>
+</head>
+<body>
+    <canvas id="shaderCanvas" data-shader="error"></canvas>
+    <div id="obscurer"></div>
+    <div id="startText">ERROR</div>
+
+    <script>
+        (() => {
+            const txt = document.getElementById('startText');
+            let started = false;
+
+            txt.addEventListener('click', () => {
+                if (started) {
+                    window.location.href = '/';
+                    return;
+                }
+                started = true;
+                txt.textContent = 'ESCAPE';
+                 document.getElementById('obscurer').style.display = 'none';
+
+                startBeep();
+            });
+
+            function startBeep() {
+                const ctx  = new (window.AudioContext || window.webkitAudioContext)();
+                const osc  = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.type = 'sawtooth';
+                osc.frequency.value = 404;
+                gain.gain.value = 0.01;
+
+                osc.connect(gain).connect(ctx.destination);
+                osc.start();
+                window.beepCtx = ctx;
+                window.beepOsc = osc;
+            }
+        })();
+    </script>
+</body>
+</html>

@@ -98,7 +98,7 @@ vec4 clouds(vec2 uv) {
 void main()
 {
     vec2 fragCoord = v_texcoord * iResolution;
-
     vec2 uv = fragCoord/iResolution.xy;
+
     gl_FragColor = clouds(uv);
 }
