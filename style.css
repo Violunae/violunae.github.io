@@ -154,6 +154,17 @@ footer {
     color: var(--strong-color);
 }
 
+.badge {
+    width: 88px;
+    height: 31px;
+    transition: transform 0.3s;
+    image-rendering: pixelated;
+}
+
+.badge:hover {
+    transform: scale(2.0);
+}
+
 @media screen and (max-width: 960px) {
     html {
         font-size: 0.75em;
