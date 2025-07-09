@@ -170,6 +170,13 @@ footer {
     transform: scale(2.0);
 }
 
+.webring {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
 @media screen and (max-width: 960px) {
     html {
         font-size: 0.75em;
