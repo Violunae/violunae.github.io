@@ -40,7 +40,8 @@ void main() {
 
     float scale = 6.0;
     float spacing = 2.0;
-    vec2 p = (vec2(uv.x, 1.0 - mod(iTime * 0.1, 1.0)) - 0.5);
+    float scan = 1.0 - mod(iTime * 0.1, 1.0);
+    vec2 p = (vec2(uv.x, scan) - 0.5);
     p *= vec2(6.0, 2.5);
 
     float dCentre = digitSDF(0, p);
@@ -49,6 +50,8 @@ void main() {
     float dist = min(dCentre, min(dLeft, dRight));
 
     if (dist < 0.0) col = vec3(0.0);
+
+    if ((uv.y > scan) && (uv.y < scan + 0.01)) col = vec3(0.0, 1.0, 1.0);
 
     float barrel = length(uv) * 0.02;
     col *= 0.95 + 0.05 * sin(iTime * 60.0);

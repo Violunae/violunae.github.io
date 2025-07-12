@@ -40,8 +40,9 @@ async function init() {
       return await response.text();
     }
 
-    const vertexShaderSource = await loadShaderSource("main", "vert");
-    const fragmentShaderName = canvas.dataset.shader || "main";
+    const vertexShaderName = canvas.dataset.vert || "main";
+    const vertexShaderSource = await loadShaderSource(vertexShaderName, "vert");
+    const fragmentShaderName = canvas.dataset.frag || "main";
     const fragmentShaderSource = await loadShaderSource(fragmentShaderName, "frag");
 
     const vertexShader = compileShader(gl, vertexShaderSource, gl.VERTEX_SHADER);

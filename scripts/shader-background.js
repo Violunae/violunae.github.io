@@ -44,8 +44,9 @@ function init() {
                 return yield response.text();
             });
         }
-        const vertexShaderSource = yield loadShaderSource("main", "vert");
-        const fragmentShaderName = canvas.dataset.shader || "main";
+        const vertexShaderName = canvas.dataset.vert || "main";
+        const vertexShaderSource = yield loadShaderSource(vertexShaderName, "vert");
+        const fragmentShaderName = canvas.dataset.frag || "main";
         const fragmentShaderSource = yield loadShaderSource(fragmentShaderName, "frag");
         const vertexShader = compileShader(gl, vertexShaderSource, gl.VERTEX_SHADER);
         const fragmentShader = compileShader(gl, fragmentShaderSource, gl.FRAGMENT_SHADER);
