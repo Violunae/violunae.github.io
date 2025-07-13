@@ -1,3 +1,5 @@
+#define PI 3.14159265359
+
 precision mediump float;
 
 varying vec2 v_texcoord;
@@ -36,7 +38,7 @@ void main() {
     vec2 fragCoord = v_texcoord * iResolution;
     vec2 uv = fragCoord/iResolution.xy;
 
-    vec3 col = mix(vec3(1.0, 0.0, 0.0), vec3(0.2, 0.1, 0.2), sin(uv.y * 810.0));
+    vec3 col = vec3(1.0, 0.0, 0.0);
 
     float scale = 6.0;
     float spacing = 2.0;
@@ -55,7 +57,7 @@ void main() {
 
     float barrel = length(uv) * 0.02;
     col *= 0.95 + 0.05 * sin(iTime * 60.0);
-    col = mix(col, vec3(0.2, 0.1, 0.2), sin(uv.y * 810.0));
+    col = mix(col, vec3(0.2, 0.1, 0.2), sin(fragCoord.y * PI * 0.5));
     col *= 1.0 - barrel;
 
     gl_FragColor = vec4(col, 1.0);

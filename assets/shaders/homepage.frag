@@ -1,3 +1,5 @@
+#define PI 3.14159265359
+
 precision mediump float;
 
 varying vec2 v_texcoord;
@@ -72,7 +74,7 @@ void main() {
     check = step(0.5, clamp(check * 3.0, 0.0, 1.0));
     vec3 col = mixOklab(col1, col2, check);
 
-    col = mixOklab(col, vec3(0.2, 0.1, 0.2), sin(uv.y * 810.0));
+    col = mixOklab(col, vec3(0.2, 0.1, 0.2), sin(fragCoord.y * PI / 3.0) * 0.5);
 
     gl_FragColor = vec4(col, 1.0);
 }
