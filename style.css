@@ -158,13 +158,14 @@ footer {
 
 .social {
     filter: saturate(0) brightness(5.0);
-    transition: filter 0.3s;
+    transition: all 0.2s;
     cursor: pointer;
     margin: 0 5px;
 }
 
 .social:hover {
     filter: none;
+    transform: scale(1.2);
 }
 
 .pfp {
@@ -187,12 +188,15 @@ footer {
 .badge {
     width: 88px;
     height: 31px;
+    z-index: 1;
+    position: relative;
     transition: transform 0.3s;
     image-rendering: pixelated;
 }
 
 .badge:hover {
     transform: scale(2.0);
+    z-index:2;
 }
 
 .webring {
