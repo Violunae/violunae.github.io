@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Password Generator</title>
+<style>
+body{
+    font-family:sans-serif;
+    max-width:420px;
+    margin:40px auto;
+    padding:0 16px;
+}
+input,button{
+    width:100%;
+    box-sizing:border-box;
+    padding:10px;
+    margin-bottom:10px;
+}
+#result{
+    padding:10px;
+    border:1px solid #ccc;
+    word-break:break-all;
+    user-select:all;
+    cursor:text;
+}
+</style>
+</head>
+<body>
+<input id="service" type="text" placeholder="Service">
+<input id="master" type="password" placeholder="Master">
+<button id="generate">Generate</button>
+<button id="copy">Copy</button>
+<div id="result"></div>
+
+<script>
+const chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+let currentPassword="";
+
+async function sha256(text){
+    const data=new TextEncoder().encode(text);
+    const hash=await crypto.subtle.digest("SHA-256",data);
+    return new Uint8Array(hash);
+}
+
+function hasAllTypes(s){
+    return /[a-z]/.test(s)&&/[A-Z]/.test(s)&&/\d/.test(s)&&/[^a-zA-Z0-9]/.test(s);
+}
+
+async function generate(){
+    const service=document.getElementById("service").value.toLowerCase().replace(/[^a-z]/g,"");
+    const master=document.getElementById("master").value;
+
+    let base=service+"\n"+master+"\n";
+    let counter=0;
+
+    while(true){
+        const hash=await sha256(base+counter);
+        let out="";
+        for(let i=0;i<16;i++){
+            const v=hash[(i*2)%hash.length]*256+hash[(i*2+1)%hash.length];
+            out+=chars[v%chars.length];
+        }
+        if(hasAllTypes(out)){
+            currentPassword=out;
+            break;
+        }
+        counter++;
+    }
+
+    document.getElementById("result").textContent="•".repeat(currentPassword.length);
+
+    try{await navigator.clipboard.writeText(currentPassword);}catch(e){}
+}
+
+async function copy(){
+    if(!currentPassword) return;
+    try{await navigator.clipboard.writeText(currentPassword);}catch(e){}
+}
+
+document.getElementById("generate").addEventListener("click",generate);
+document.getElementById("copy").addEventListener("click",copy);
+document.getElementById("master").addEventListener("keydown",e=>{
+    if(e.key==="Enter")generate();
+});
+</script>
+</body>
+</html>
