@@ -35,6 +35,7 @@ input,button{
 
 <script>
 const chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+const salt = "V/umD^wE7&[,7]1iA+8e|A=RfU[($,V["
 let currentPassword="";
 
 async function sha256(text){
@@ -44,14 +45,14 @@ async function sha256(text){
 }
 
 function hasAllTypes(s){
-    return /[a-z]/.test(s)&&/[A-Z]/.test(s)&&/\d/.test(s)&&/[^a-zA-Z0-9]/.test(s);
+    return /[a-z]/.test(s)&&/[A-Z]/.test(s)&&/\d/.test(s)&&/[^a-zA-Z\d]/.test(s);
 }
 
 async function generate(){
-    const service=document.getElementById("service").value.toLowerCase().replace(/[^a-z]/g,"");
+    const service=document.getElementById("service").value.toLowerCase().replace(/[^a-z\d]/g,"");
     const master=document.getElementById("master").value;
 
-    let base=service+"\n"+master+"\n";
+    let base=service+"\n"+master+"\n"+salt+"\n";
     let counter=0;
 
     while(true){
